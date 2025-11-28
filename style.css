@@ -1,0 +1,397 @@
+:root {
+    /* --- 暖色系配色設定 --- */
+    --primary-color: #D86C4E;
+    --secondary-color: #A34828;
+    --accent-color: #F2AA7E;
+    
+    --light-color: #FFF9F0;
+    --dark-color: #4E342E;
+    --border-color: #E6DMD0;
+    
+    --success-color: #2a9d8f;
+    --border-radius: 8px;
+    --box-shadow: none;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--dark-color);
+    background: linear-gradient(135deg, #fffcf5 0%, #f7e8d5 100%);
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: none; 
+    border: 1px solid #efebe0;
+    overflow: hidden;
+    padding: 25px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #efebe9;
+}
+
+h1 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 2.2rem;
+}
+
+.subtitle {
+    color: #8d6e63;
+    font-size: 1.1rem;
+}
+
+.question-block {
+    margin-bottom: 35px;
+    padding: 20px;
+    border: 1px solid #efebe9;
+    border-radius: var(--border-radius);
+    background: #fffdf9;
+    transition: var(--transition);
+}
+
+.question-block:hover {
+    border-color: var(--accent-color);
+    background: #fffbf5;
+}
+
+h2 {
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+h2:before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 24px;
+    background: var(--accent-color);
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.audio-container {
+    background: #fbe9e7;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin: 15px 0 20px;
+    text-align: center;
+    border: 1px dashed var(--accent-color);
+}
+
+audio {
+    width: 100%;
+    max-width: 500px;
+}
+
+.form-group {
+    margin-top: 15px;
+}
+
+/* --- 選項樣式優化 --- */
+.options-grid {
+    display: grid;
+    /* 關鍵修改：將 130px 改為 180px 
+       原理：在約 750px 的容器寬度中，180px 只能塞下 3 個 (3x180=540)，
+       塞不下第 4 個，因此會強制變成「第一排 3 個、第二排 2 個」。
+       且因為用了 1fr，第二排的 2 個會自動變寬填滿空間，視覺上非常平衡。
+    */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin: 15px 0;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    min-height: 100px; 
+    padding: 10px;
+    
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--dark-color);
+}
+
+label:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.options-grid input[type="checkbox"],
+.options-grid input[type="radio"] {
+    display: none;
+}
+
+.options-grid label:has(input:checked) {
+    border-color: var(--primary-color);
+    background-color: #fbe9e7;
+}
+
+input:checked + span {
+    color: var(--secondary-color); 
+    font-weight: bold;
+}
+
+.options-grid input + span::before {
+    display: none; 
+    content: none;
+}
+
+.options-grid input + span {
+    display: block;
+    padding: 0;
+    font-size: 1.05rem;
+}
+
+/* 評分區塊 (Likert Scale) */
+.likert-scale-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 20px 0;
+    margin-top: 10px;
+}
+
+.scale-label-left, 
+.scale-label-right {
+    font-weight: 600;
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+.radio-options {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.radio-labels {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.radio-labels span {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+    color: #8d6e63;
+    font-size: 1.1rem;
+}
+
+.radio-inputs {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+/* 修改 style.css 約 230 行左右 */
+.radio-inputs label {
+    flex: 1;                /* 關鍵修正：讓每個圓點按鈕的容器佔比均等 (20%) */
+    display: flex;          /* 開啟彈性盒模型 */
+    justify-content: center;/* 讓圓點在自己的 20% 空間內水平居中 */
+    align-items: center;    /* 垂直居中 */
+    
+    /* 以下維持原本設定 */
+    min-height: auto;
+    border: none !important;
+    background: transparent !important;
+    padding: 5px 0;
+    box-shadow: none;
+}
+
+.radio-inputs input[type="radio"] {
+    display: block;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #bdbdbd;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 0;
+}
+
+.radio-inputs input[type="radio"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(216, 108, 78, 0.2);
+    transform: scale(1.1);
+}
+
+.rating-section p, .feedback-section p {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--dark-color);
+}
+
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+    min-height: 100px;
+    transition: var(--transition);
+    background: #fffdf9;
+    color: var(--dark-color);
+}
+
+textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(216, 108, 78, 0.25);
+}
+
+.submit-container {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #efebe9;
+}
+
+button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: none;
+}
+
+button:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(216, 108, 78, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    background-color: #bdbdbd;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+#submissionStatus {
+    margin-top: 15px;
+    min-height: 24px;
+    font-weight: 500;
+}
+
+.success { color: #27ae60; }
+.error { color: #c0392b; }
+
+/* --- 其他選項輸入框樣式 (由 HTML inline style 重構) --- */
+.other-input-group {
+    margin-top: 15px;
+}
+
+.other-input-label {
+    /* 覆蓋全域 label 的 flex 設定 */
+    display: block; 
+    text-align: left;
+    border: none;
+    background: none;
+    padding: 0;
+    min-height: auto; /* 覆蓋全域 label 的 100px 高度 */
+    cursor: default;
+}
+
+/* 防止繼承全域 label:hover 的邊框與背景變化 */
+.other-input-label:hover {
+    border-color: transparent;
+    color: var(--dark-color);
+    background-color: transparent;
+}
+
+.other-input-title {
+    font-weight: bold;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.other-text-input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--border-radius); /* 替換原寫死的 8px */
+    font-size: 1rem;
+    color: var(--dark-color); /* 替換原寫死的 #4E342E */
+    transition: var(--transition);
+}
+
+/* 增加 focus 狀態以提升 UX (這是額外建議的優化) */
+.other-text-input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+        border: none;
+    }
+    
+    h1 { font-size: 1.8rem; }
+    
+    .options-grid {
+        grid-template-columns: 1fr 1fr; /* 手機版維持並排，會變成 2+2+1 */
+    }
+    
+    button {
+        width: 100%;
+        padding: 12px;
+    }
+    
+    .likert-scale-container {
+        position: relative;
+        padding-top: 30px;
+    }
+
+    .scale-label-left { position: absolute; top: 0; left: 0; }
+    .scale-label-right { position: absolute; top: 0; right: 0; }
+}

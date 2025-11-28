@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音樂體驗問卷</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>療癒機器人研究：療癒音樂偏好調查</h1>
+            <p class="subtitle">
+                為了讓我們的療癒機器人能更貼近每位使用者的心，<br>
+                我們想了解什麼樣的音樂會讓您感到放鬆、舒服或被療癒。<br>
+                請依照您的感受自由填寫，您的回答將幫助我們打造更溫暖、更懂您的療癒機器人。<br>
+            </p>
+        </header>
+
+        <form id="musicSurveyForm">
+            <div class="question-block">
+                <h2>請問下列哪些音樂風格會讓您感到較為放鬆？（可複選）</h2>
+                <div class="form-group">
+                    <div class="options-grid">
+                        <label>
+                            <input type="checkbox" name="styles_soft_relaxing" value="古典音樂">
+                            <span>古典音樂</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="styles_soft_relaxing" value="抒情歌">
+                            <span>抒情歌</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="styles_soft_relaxing" value="自然環境音">
+                            <span>自然環境音<br>（雨聲、海浪、森林）</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="styles_soft_relaxing" value="民謠">
+                            <span>民謠</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="styles_soft_relaxing" value="輕音樂">
+                            <span>輕音樂</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="styles_soft_relaxing" value="流行音樂">
+                            <span>流行音樂</span>
+                        </label>
+                    </div>
+
+                    <div class="other-input-group">
+                        <label class="other-input-label">
+                            <span class="other-input-title">其他：</span>
+                            <input type="text" name="styles_soft_relaxing" placeholder="請輸入其他風格..."
+                                class="other-text-input">
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <h2>請問哪些音樂風格會讓您聽了心情變差或感到較不舒服？（可複選）</h2>
+                <div class="form-group">
+                    <div class="options-grid">
+                        <label>
+                            <input type="checkbox" name="styles_intense_emotional" value="金屬 / 搖滾">
+                            <span>金屬 / 搖滾</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="styles_intense_emotional" value="高分貝強烈節奏">
+                            <span>高分貝強烈節奏</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="styles_intense_emotional" value="悲傷抒情">
+                            <span>悲傷抒情</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="styles_intense_emotional" value="電音">
+                            <span>電音</span>
+                        </label>
+                    </div>
+
+                    <div class="other-input-group">
+                        <label class="other-input-label">
+                            <span class="other-input-title">其他：</span>
+                            <input type="text" name="styles_intense_emotional" placeholder="請輸入其他風格..."
+                                class="other-text-input">
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <h2>試聽曲目 1 / 5</h2>
+                <div class="audio-container">
+                    <audio controls id="audio_1">
+                        <source src="assets/music_1.mp3" type="audio/mpeg">
+                        您的瀏覽器不支援音訊元素
+                    </audio>
+                </div>
+                <div class="form-group">
+                    <div class="rating-section">
+                        <p>這首音樂讓您放鬆的程度</p>
+                        <div class="likert-scale-container">
+                            <span class="scale-label-left">完全不放鬆</span>
+                            <div class="radio-options">
+                                <div class="radio-labels">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                                </div>
+                                <div class="radio-inputs">
+                                    <label><input type="radio" name="score_music_1" value="1" required></label>
+                                    <label><input type="radio" name="score_music_1" value="2"></label>
+                                    <label><input type="radio" name="score_music_1" value="3"></label>
+                                    <label><input type="radio" name="score_music_1" value="4"></label>
+                                    <label><input type="radio" name="score_music_1" value="5"></label>
+                                </div>
+                            </div>
+                            <span class="scale-label-right">非常放鬆</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <h2>試聽曲目 2 / 5</h2>
+                <div class="audio-container">
+                    <audio controls id="audio_2">
+                        <source src="assets/music_2.mp3" type="audio/mpeg">
+                        您的瀏覽器不支援音訊元素
+                    </audio>
+                </div>
+                <div class="form-group">
+                    <div class="rating-section">
+                        <p>這首音樂讓您放鬆的程度</p>
+                        <div class="likert-scale-container">
+                            <span class="scale-label-left">完全不放鬆</span>
+                            <div class="radio-options">
+                                <div class="radio-labels">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                                </div>
+                                <div class="radio-inputs">
+                                    <label><input type="radio" name="score_music_2" value="1" required></label>
+                                    <label><input type="radio" name="score_music_2" value="2"></label>
+                                    <label><input type="radio" name="score_music_2" value="3"></label>
+                                    <label><input type="radio" name="score_music_2" value="4"></label>
+                                    <label><input type="radio" name="score_music_2" value="5"></label>
+                                </div>
+                            </div>
+                            <span class="scale-label-right">非常放鬆</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <h2>試聽曲目 3 / 5</h2>
+                <div class="audio-container">
+                    <audio controls id="audio_3">
+                        <source src="assets/music_3.mp3" type="audio/mpeg">
+                        您的瀏覽器不支援音訊元素
+                    </audio>
+                </div>
+                <div class="form-group">
+                    <div class="rating-section">
+                        <p>這首音樂讓您放鬆的程度</p>
+                        <div class="likert-scale-container">
+                            <span class="scale-label-left">完全不放鬆</span>
+                            <div class="radio-options">
+                                <div class="radio-labels">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                                </div>
+                                <div class="radio-inputs">
+                                    <label><input type="radio" name="score_music_3" value="1" required></label>
+                                    <label><input type="radio" name="score_music_3" value="2"></label>
+                                    <label><input type="radio" name="score_music_3" value="3"></label>
+                                    <label><input type="radio" name="score_music_3" value="4"></label>
+                                    <label><input type="radio" name="score_music_3" value="5"></label>
+                                </div>
+                            </div>
+                            <span class="scale-label-right">非常放鬆</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <h2>試聽曲目 4 / 5</h2>
+                <div class="audio-container">
+                    <audio controls id="audio_4">
+                        <source src="assets/music_4.mp3" type="audio/mpeg">
+                        您的瀏覽器不支援音訊元素
+                    </audio>
+                </div>
+                <div class="form-group">
+                    <div class="rating-section">
+                        <p>這首音樂讓您放鬆的程度</p>
+                        <div class="likert-scale-container">
+                            <span class="scale-label-left">完全不放鬆</span>
+                            <div class="radio-options">
+                                <div class="radio-labels">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                                </div>
+                                <div class="radio-inputs">
+                                    <label><input type="radio" name="score_music_4" value="1" required></label>
+                                    <label><input type="radio" name="score_music_4" value="2"></label>
+                                    <label><input type="radio" name="score_music_4" value="3"></label>
+                                    <label><input type="radio" name="score_music_4" value="4"></label>
+                                    <label><input type="radio" name="score_music_4" value="5"></label>
+                                </div>
+                            </div>
+                            <span class="scale-label-right">非常放鬆</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <h2>試聽曲目 5 / 5</h2>
+                <div class="audio-container">
+                    <audio controls id="audio_5">
+                        <source src="assets/music_5.mp3" type="audio/mpeg">
+                        您的瀏覽器不支援音訊元素
+                    </audio>
+                </div>
+                <div class="form-group">
+                    <div class="rating-section">
+                        <p>這首音樂讓您放鬆的程度</p>
+                        <div class="likert-scale-container">
+                            <span class="scale-label-left">完全不放鬆</span>
+                            <div class="radio-options">
+                                <div class="radio-labels">
+                                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                                </div>
+                                <div class="radio-inputs">
+                                    <label><input type="radio" name="score_music_5" value="1" required></label>
+                                    <label><input type="radio" name="score_music_5" value="2"></label>
+                                    <label><input type="radio" name="score_music_5" value="3"></label>
+                                    <label><input type="radio" name="score_music_5" value="4"></label>
+                                    <label><input type="radio" name="score_music_5" value="5"></label>
+                                </div>
+                            </div>
+                            <span class="scale-label-right">非常放鬆</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submit-container">
+                <button type="submit">提交問卷</button>
+                <div id="submissionStatus"></div>
+            </div>
+
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
