@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 阻止瀏覽器預設的跳頁行為，改用 JavaScript 處理
         e.preventDefault();
 
-        // **[新增功能]** 步驟 1: 自訂 Checkbox 群組驗證 (確保複選題至少選一項)
+        // **[核心驗證]** 步驟 1: 自訂 Checkbox 群組驗證 (確保複選題至少選一項或輸入「其他」)
         if (!validateCheckboxGroups()) {
             return; // 如果 Checkbox 驗證失敗，停止提交
         }
@@ -113,22 +113,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 輔助函式區域 (Helper Functions) ---
 
     /**
-     * **[新增功能]**
-     * 自訂驗證函式：檢查必填的 Checkbox 群組是否至少有一項被勾選。
+     * **[功能已更新]**
+     * 自訂驗證函式：檢查必填的 Checkbox 群組是否「至少有一項被勾選」或「其他欄位有輸入」。
      * @returns {boolean} 如果所有必選群組都滿足要求，返回 true。
      */
     function validateCheckboxGroups() {
+        // 設定要驗證的群組名稱和對應的「其他」欄位名稱
         const requiredGroups = [
-            { name: 'styles_soft_relaxing', message: '請至少選擇一項您感到放鬆的音樂風格。' },
-            { name: 'styles_intense_emotional', message: '請至少選擇一項您感到不舒服的音樂風格。' }
+            { 
+                name: 'styles_soft_relaxing', 
+                otherName: 'styles_soft_relaxing_other', // 對應 HTML 中「其他」文字輸入框的 name
+                message: '請至少選擇一項或在「其他」中輸入您感到放鬆的音樂風格。' 
+            },
+            { 
+                name: 'styles_intense_emotional', 
+                otherName: 'styles_intense_emotional_other', 
+                message: '請至少選擇一項或在「其他」中輸入您感到不舒服的音樂風格。' 
+            }
         ];
 
         for (const group of requiredGroups) {
-            // 只選擇 input[type="checkbox"] 來排除 "其他" 的文字輸入框
+            // 1. 檢查是否有任何 Checkbox 被勾選
             const checkboxes = form.querySelectorAll(`input[type="checkbox"][name="${group.name}"]`);
-            const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+            const isCheckboxChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+            
+            // 2. 檢查 "其他" 文字欄位是否有輸入內容 (忽略空格)
+            const otherInput = form.querySelector(`input[type="text"][name="${group.otherName}"]`);
+            // 使用 ?. 來確保如果找不到元素也不會報錯
+            const isOtherInputFilled = otherInput && otherInput.value.trim() !== '';
 
-            if (!isChecked) {
+            // 如果 Checkbox 和 "其他" 都沒有選擇/輸入，則驗證失敗
+            if (!isCheckboxChecked && !isOtherInputFilled) {
                 showStatus(group.message, 'error');
 
                 // 捲動到該區塊，提供更好的用戶體驗
