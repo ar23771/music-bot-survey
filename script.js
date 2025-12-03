@@ -35,7 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // 阻止瀏覽器預設的跳頁行為，改用 JavaScript 處理
         e.preventDefault();
 
-        // 表單驗證 (檢查 HTML 中的 required 屬性)
+        // **[新增功能]** 步驟 1: 自訂 Checkbox 群組驗證 (確保複選題至少選一項)
+        if (!validateCheckboxGroups()) {
+            return; // 如果 Checkbox 驗證失敗，停止提交
+        }
+
+        // 步驟 2: 原生表單驗證 (檢查 HTML 中的 required 屬性，主要用於 Radio Button)
         if (!form.checkValidity()) {
             showStatus('請完成所有必填項目', 'error');
             form.reportValidity(); // 觸發瀏覽器原生的提示框
@@ -49,8 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // --- 資料增強 (Data Enrichment) ---
             // 1. 自動紀錄提交時間 (ISO 格式)
             formData.append('submission_time', new Date().toISOString());
-
-            // [已刪除] 2. 紀錄裝置資訊 (user_agent) -> 這行直接刪掉不用了
 
             // 3. 關鍵：加入瀏覽器唯一識別碼 (UUID)
             formData.append('uuid', getOrCreateUUID());
@@ -108,6 +111,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- 輔助函式區域 (Helper Functions) ---
+
+    /**
+     * **[新增功能]**
+     * 自訂驗證函式：檢查必填的 Checkbox 群組是否至少有一項被勾選。
+     * @returns {boolean} 如果所有必選群組都滿足要求，返回 true。
+     */
+    function validateCheckboxGroups() {
+        const requiredGroups = [
+            { name: 'styles_soft_relaxing', message: '請至少選擇一項您感到放鬆的音樂風格。' },
+            { name: 'styles_intense_emotional', message: '請至少選擇一項您感到不舒服的音樂風格。' }
+        ];
+
+        for (const group of requiredGroups) {
+            // 只選擇 input[type="checkbox"] 來排除 "其他" 的文字輸入框
+            const checkboxes = form.querySelectorAll(`input[type="checkbox"][name="${group.name}"]`);
+            const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+            if (!isChecked) {
+                showStatus(group.message, 'error');
+
+                // 捲動到該區塊，提供更好的用戶體驗
+                const questionBlock = form.querySelector(`input[name="${group.name}"]`)?.closest('.question-block');
+                if (questionBlock) {
+                    questionBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     // 顯示狀態訊息
     function showStatus(message, type) {
